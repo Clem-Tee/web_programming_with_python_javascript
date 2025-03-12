@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from django.urls import reverse
 from django import forms
 from . import util
 import markdown2
+import random
 
 def index(request):
     return render(request, "encyclopedia/index.html", {
@@ -75,3 +77,29 @@ def create(request):
 
     # If GET request, display a new form
     return render(request, "encyclopedia/create.html", {"form": NewPageForm()})
+
+def edit_entry(request, title):
+    if request.method == "POST":
+        new_content = request.POST["content"]
+        util.save_entry(title, new_content) # Save the updated content
+        return redirect("entry", title=title)
+    
+    content = util.get_entry(title)
+    if content is None:
+        return render(request, "encyclopedia/error.html", {"message": "Page not found."})
+    
+    return render(request, "encyclopedia/edit.html", {"title": title, "content": content})
+
+def random_page(request):
+    """
+    Redirects the user to a random encyclopedia entry.
+    """
+    entries = util.list_entries() # Get list of all entries
+    if entries: # Ensure there are entries available
+        random_entry = random.choice(entries) # Pick a random entry
+        return redirect("entry", title=random_entry) # Redirect to that entry
+    
+    # If no entries exist, show an error page
+    return render(request, "encyclopedia/error.html", {
+        "message": "No entries available."
+    })

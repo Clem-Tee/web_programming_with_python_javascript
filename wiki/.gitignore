@@ -1,0 +1,54 @@
+# Ignore the virtual environment
+venv/
+env/
+
+# Ignore compiled Python files
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+
+# Ignore Django-specific files
+db.sqlite3
+*.sqlite3
+*.log
+*.pot
+*.pyc
+*.swp
+*.swo
+*.swn
+
+# Ignore environment variables and secrets
+.env
+*.env
+config/settings/local.py
+config/settings/.env
+
+# Ignore dependency directories
+node_modules/
+bower_components/
+
+# Ignore VS Code settings
+.vscode/
+*.code-workspace
+
+# Ignore JetBrains (PyCharm) settings
+.idea/
+
+# Ignore MacOS system files
+.DS_Store
+
+# Ignore logs and caches
+*.log
+logs/
+*.out
+*.pid
+
+# Ignore migrations (optional, but recommended to keep them if you want to track them)
+**/migrations/*.pyc
+**/migrations/*.py
+!**/migrations/__init__.py
+
+# Ignore static and media files (if they are generated dynamically)
+staticfiles/
+media/
